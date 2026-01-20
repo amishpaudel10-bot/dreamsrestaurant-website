@@ -3,41 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dreams Restaurant & Lodge</title>
+    <title>Dreams Restaurant - Gaidakot</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body style="background:#f4f4f4; font-family: sans-serif; margin:0;">
-    <header style="background:#d32f2f; color:white; padding:15px; text-align:center;">
-        <h1 style="margin:0;">Dreams Restaurant</h1>
-        <p style="margin:5px 0; font-size:0.8rem;">Authentic Nepali Taste</p>
-        <button onclick="document.getElementById('adminLoginForm').style.display='block'" style="background:white; color:#d32f2f; border:none; padding:8px 15px; border-radius:5px; font-weight:bold; margin-top:10px;">Admin Login</button>
+<body>
+    <header>
+        <h1>Dreams Restaurant</h1>
+        <p>📍 Gaindakot-2, Riverside | Owner: Sapana Paudel</p>
+        <button onclick="toggleAdmin()">Admin Login</button>
         
-        <div id="adminLoginForm" style="display:none; margin-top:15px; background:white; padding:15px; color:black; border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-            <input type="text" id="adminUser" placeholder="Username" style="width:80%; margin-bottom:10px; padding:8px;">
-            <input type="password" id="adminPass" placeholder="Password" style="width:80%; margin-bottom:10px; padding:8px;">
-            <button onclick="login()" style="width:85%; padding:10px; background:#d32f2f; color:white; border:none;">Login</button>
+        <div id="adminLogin" style="display:none; background:white; padding:10px; margin-top:10px; color:black;">
+            <input type="text" id="user" placeholder="Amish Paudel">
+            <input type="password" id="pass" placeholder="amishff">
+            <button onclick="login()">Login</button>
         </div>
     </header>
 
-    <h2 style="text-align:center; color:#333; margin-top:20px;">Our Nepali Menu</h2>
-    <div id="menuGrid">
-        </div>
+    <div id="customerView">
+        <section class="info-bar">
+            <span>🚀 Delivery under 30min</span> | <span>📞 +977 976-6627143</span>
+        </section>
 
-    <div id="adminDashboard" style="display:none; background:white; border:3px solid #d32f2f; padding:20px; margin:20px; border-radius:10px;">
-        <h2 style="color:#d32f2f;">Admin Dashboard</h2>
-        <div style="background:#eee; padding:15px; border-radius:5px;">
-            <h3>Add New Item</h3>
-            <input id="n" placeholder="Item Name (e.g. Sukuti)" style="width:90%; padding:10px; margin-bottom:10px;">
-            <input id="p" placeholder="Price" style="width:90%; padding:10px; margin-bottom:10px;">
-            <button onclick="addItem()" style="width:95%; background:#27ae60; color:white; border:none; padding:12px;">Add to Live Menu</button>
+        <div id="packageGrid" class="grid"></div>
+
+        <div id="orderForm" style="display:none; background:white; padding:20px; margin:10px; border-radius:10px;">
+            <h3>Complete Your Order</h3>
+            <p>Delivery only in: <b>Naraynghat & Gaidakot</b></p>
+            <input type="text" id="custName" placeholder="Your Name">
+            <select id="location">
+                <option value="Gaidakot">Gaidakot</option>
+                <option value="Naraynghat">Naraynghat</option>
+            </select>
+            <input type="text" id="coupon" placeholder="Coupon Code (Optional)">
+            
+            <div class="payment-section">
+                <h4>Payment (eSewa/Khalti/Bank)</h4>
+                <p>Scan Admin QR for Payment:</p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=PAYMENT_TO_9766627143" alt="Admin QR">
+                <p>Upload Screenshot of Payment:</p>
+                <input type="file" id="payShot" accept="image/*">
+            </div>
+            
+            <button onclick="submitOrder()" class="order-btn">Submit via WhatsApp</button>
         </div>
-        
-        <h3>Current Menu Items</h3>
-        <ul id="adminList" style="list-style:none; padding:0;"></ul>
-        <button onclick="location.reload()" style="background:#333; color:white; width:100%; padding:12px; margin-top:20px; border:none;">Logout & Save</button>
+    </div>
+
+    <div id="adminPanel" style="display:none; padding:20px;">
+        <h2>Admin Dashboard (Amish Paudel)</h2>
+        <div id="pendingOrders"></div>
+        <hr>
+        <h3>Order History</h3>
+        <div id="orderHistory"></div>
+        <button onclick="location.reload()">Logout</button>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
-
