@@ -1,3 +1,4 @@
+// Full 20 Item Menu for Dreams Restaurant
 const items = [
     { id: 1, name: 'Chicken Khana Set', price: 300 },
     { id: 2, name: 'Mutton Khana Set', price: 450 },
@@ -23,6 +24,7 @@ const items = [
 
 let selectedItem = null;
 
+// Display the menu when page loads
 window.onload = () => {
     const grid = document.getElementById('menuGrid');
     if (grid) {
@@ -36,37 +38,51 @@ window.onload = () => {
     }
 };
 
+// Start the ordering process
+function startOrder(id) {
+    selectedItem = items.find(i => i.id === id);
+    document.getElementById('orderTitle').innerText = "Ordering: " + selectedItem.name;
+    document.getElementById('orderForm').style.display = 'block';
+    // Scroll down smoothly to the form
+    window.scrollTo({ top: document.getElementById('orderForm').offsetTop - 50, behavior: 'smooth' });
+}
+
+// WhatsApp Order Submission
+function submitToWA() {
+    const nameInput = document.getElementById('custName');
+    const locInput = document.getElementById('custLoc');
+    
+    if(!nameInput.value) { 
+        alert("Please enter your name"); 
+        return; 
+    }
+    
+    const msg = `*NEW ORDER - DREAMS RESTAURANT*%0A--------------------------%0AItem: ${selectedItem.name}%0APrice: NPR ${selectedItem.price}%0ACustomer: ${nameInput.value}%0ALocation: ${locInput.value}`;
+    window.open(`https://wa.me/9779766627143?text=${msg}`);
+}
+
+// Show/Hide Admin Login Box
 function toggleAdminBox() {
     const box = document.getElementById('adminLogin');
     box.style.display = box.style.display === 'none' ? 'block' : 'none';
 }
 
-function startOrder(id) {
-    selectedItem = items.find(i => i.id === id);
-    document.getElementById('orderTitle').innerText = "Ordering: " + selectedItem.name;
-    document.getElementById('orderForm').style.display = 'block';
-    window.scrollTo({ top: document.getElementById('orderForm').offsetTop - 50, behavior: 'smooth' });
-}
-
-function submitToWA() {
-    const name = document.getElementById('custName').value;
-    const loc = document.getElementById('custLoc').value;
-    if(!name) { alert("Please enter your name"); return; }
-    
-    const msg = `*NEW ORDER - DREAMS RESTAURANT*%0A--------------------------%0AItem: ${selectedItem.name}%0APrice: NPR ${selectedItem.price}%0ACustomer: ${name}%0ALocation: ${loc}`;
-    window.open(`https://wa.me/9779766627143?text=${msg}`);
-}
-
+// NEW FLEXIBLE ADMIN LOGIN
 function checkAdmin() {
-    const u = document.getElementById('admU').value;
-    const p = document.getElementById('admP').value;
-    // Updated Credentials
-    if(u === "Sapana Paudel" && p === "pukuli") {
+    // .trim() removes extra spaces, .toLowerCase() makes it ignore capitalization
+    const user = document.getElementById('admU').value.trim().toLowerCase();
+    const pass = document.getElementById('admP').value.trim().toLowerCase();
+
+    const correctUser = "sapana paudel";
+    const correctPass = "pukuli";
+
+    if (user === correctUser && pass === correctPass) {
+        // Success
         document.getElementById('mainSite').style.display = 'none';
         document.getElementById('adminDash').style.display = 'block';
         document.getElementById('adminLogin').style.display = 'none';
-    } else { 
-        alert("Incorrect Username or Password"); 
+    } else {
+        // Failure
+        alert("Incorrect Username or Password. Please check for spelling mistakes.");
     }
 }
-    
