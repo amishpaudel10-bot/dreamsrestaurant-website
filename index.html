@@ -3,33 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dreams Restaurant</title>
+    <title>Dreams Restaurant & Lodge</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <header>
-        <h1>Dreams Restaurant</h1>
-        <nav>
-            <a href="#" onclick="toggleAdminLogin()">Admin Login</a>
-        </nav>
-        <div id="adminLoginForm" style="display:none; padding:10px; background:#ddd;">
-            <input type="text" id="user" placeholder="Amish Paudel">
-            <input type="password" id="pass" placeholder="Password">
-            <button onclick="login()">Login</button>
+<body style="background:#f4f4f4; font-family: sans-serif; margin:0;">
+    <header style="background:#d32f2f; color:white; padding:15px; text-align:center;">
+        <h1 style="margin:0;">Dreams Restaurant</h1>
+        <p style="margin:5px 0; font-size:0.8rem;">Authentic Nepali Taste</p>
+        <button onclick="document.getElementById('adminLoginForm').style.display='block'" style="background:white; color:#d32f2f; border:none; padding:8px 15px; border-radius:5px; font-weight:bold; margin-top:10px;">Admin Login</button>
+        
+        <div id="adminLoginForm" style="display:none; margin-top:15px; background:white; padding:15px; color:black; border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            <input type="text" id="adminUser" placeholder="Username" style="width:80%; margin-bottom:10px; padding:8px;">
+            <input type="password" id="adminPass" placeholder="Password" style="width:80%; margin-bottom:10px; padding:8px;">
+            <button onclick="login()" style="width:85%; padding:10px; background:#d32f2f; color:white; border:none;">Login</button>
         </div>
     </header>
 
-    <div id="menuGrid" class="menu-grid"></div>
+    <h2 style="text-align:center; color:#333; margin-top:20px;">Our Nepali Menu</h2>
+    <div id="menuGrid">
+        </div>
 
-    <section id="adminDashboard" style="display:none; border:5px solid red; padding:20px; margin:20px;">
-        <h2>Admin Panel</h2>
-        <input id="newItemName" placeholder="Dish Name">
-        <input id="newItemPrice" placeholder="Price">
-        <button onclick="addItem()">Add Item</button>
-        <ul id="adminMenuList"></ul>
-        <button onclick="location.reload()">Logout</button>
-    </section>
+    <div id="adminDashboard" style="display:none; background:white; border:3px solid #d32f2f; padding:20px; margin:20px; border-radius:10px;">
+        <h2 style="color:#d32f2f;">Admin Dashboard</h2>
+        <div style="background:#eee; padding:15px; border-radius:5px;">
+            <h3>Add New Item</h3>
+            <input id="n" placeholder="Item Name (e.g. Sukuti)" style="width:90%; padding:10px; margin-bottom:10px;">
+            <input id="p" placeholder="Price" style="width:90%; padding:10px; margin-bottom:10px;">
+            <button onclick="addItem()" style="width:95%; background:#27ae60; color:white; border:none; padding:12px;">Add to Live Menu</button>
+        </div>
+        
+        <h3>Current Menu Items</h3>
+        <ul id="adminList" style="list-style:none; padding:0;"></ul>
+        <button onclick="location.reload()" style="background:#333; color:white; width:100%; padding:12px; margin-top:20px; border:none;">Logout & Save</button>
+    </div>
 
     <script src="script.js"></script>
 </body>
 </html>
+
