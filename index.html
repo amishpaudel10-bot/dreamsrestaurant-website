@@ -1,4 +1,4 @@
-<!DOCTYPE .html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,103 +11,33 @@
         <h1 id="restaurantName">Dreams Restaurant and Mini Lodge</h1>
         <nav>
             <a href="#menu">Menu</a>
-            <a href="#order">Order Online</a>
-            <a href="#location">Location</a>
-            <a href="#contact">Contact</a>
+            <a href="#order">Order</a>
             <a href="#" onclick="toggleAdminLogin()">Admin Login</a>
         </nav>
-        <!-- Admin Login Form (Toggleable) -->
-        <div id="adminLoginForm" style="display:none; text-align:center; margin-top:1rem;">
-            <input type="text" id="headerAdminUser" placeholder="Username" style="width:150px; margin:0 0.5rem;">
-            <input type="password" id="headerAdminPass" placeholder="Password" style="width:150px; margin:0 0.5rem;">
+        
+        <div id="adminLoginForm" style="display:none; padding: 20px; background: #eee; margin-top: 10px;">
+            <input type="text" id="headerAdminUser" placeholder="Username (Amish Paudel)">
+            <input type="password" id="headerAdminPass" placeholder="Password (amishff)">
             <button onclick="loginAdminFromHeader()">Login</button>
         </div>
     </header>
 
     <section id="dashboard" class="hero">
-        <div class="hero-content">
-            <h2>Welcome to Dreams!</h2>
-            <p>Authentic Nepali flavors in a cozy mini lodge. Order from home and enjoy!</p>
-            <p><strong>Customer Service:</strong> <span id="customerService">+977 982-5205381</span></p>
-        </div>
+        <h2>Welcome to Dreams!</h2>
+        <p>Authentic Nepali flavors. Customer Service: <span id="customerService">+977 982-5205381</span></p>
     </section>
 
     <section id="menu">
         <h2>Our Menu</h2>
         <div id="menuGrid" class="menu-grid">
-            <!-- Menu items loaded dynamically -->
-        </div>
-    </section>
-
-    <section id="order">
-        <h2>Order from Home</h2>
-        <p><strong>Note:</strong> Orders are only valid for delivery in Naraynghat and Gaidakot.</p>
-        <div id="qrCodes">
-            <!-- QR Codes will be dynamically loaded here -->
-        </div>
-        <form id="orderForm">
-            <label for="name">Name:</label>
-            <input type="text" id="name" required>
-            
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" required>
-            
-            <label for="address">Address (in Naraynghat or Gaidakot):</label>
-            <input type="text" id="address" required>
-            
-            <label for="items">Select Items:</label>
-            <select id="items" multiple>
-                <!-- Items loaded dynamically -->
-            </select>
-            
-            <label for="payment">Payment Method:</label>
-            <select id="payment">
-                <option value="Esewa">Esewa</option>
-                <option value="Bank">Bank Transfer</option>
-                <option value="Khalti">Khalti</option>
-            </select>
-            
-            <label for="paymentScreenshot">Upload Payment Screenshot (PNG/JPG):</label>
-            <input type="file" id="paymentScreenshot" accept="image/png, image/jpeg" required>
-            
-            <button type="submit">Place Order</button>
-        </form>
-        <div id="orderStatus"></div>
-    </section>
-
-    <section id="location">
-        <h2>Our Location</h2>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.123456789012!2d84.4321!3d27.6789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDQwJzQ0LjAiTiA4NMKwMjUnNTUuNiJF!5e0!3m2!1sen!2snp!4v1234567890123!5m2!1sen!2snp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        <p>Address: Dreams Restaurant and Mini Lodge, Gaidakot -1 River Side, Nepal</p>
-    </section>
-
-    <section id="contact">
-        <h2>Contact Us</h2>
-        <p>Phone: <span id="contactPhone">+977 982-5205381</span></p>
-        <p>Email: <span id="contactEmail">info@dreamsrestaurant.com</span></p>
-    </section>
-
-    <footer>
-        <p>&copy; 2023 Dreams Restaurant and Mini Lodge. All rights reserved.</p>
-    </footer>
-
-    <!-- Admin Panel Modal (Fallback) -->
-    <div id="adminModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAdminPanel()">&times;</span>
-            <h2>Admin Login</h2>
-            <input type="text" id="adminUser" placeholder="Username">
-            <input type="password" id="adminPass" placeholder="Password">
-            <button onclick="loginAdmin()">Login</button>
-            <div id="adminContent" style="display:none;">
-                <h3>Admin Dashboard</h3>
-                <button onclick="viewOrders()">View Orders</button>
-                <button onclick="editMenu()">Edit Menu</button>
-                <button onclick="manageQRCodes()">Manage QR Codes</button>
-                <div id="adminOutput"></div>
             </div>
-        </div>
-    </div>
+    </section>
+
+    <section id="adminDashboard" style="display:none; padding: 20px; background: #fff; border: 2px solid red;">
+        <h2>Admin Control Panel</h2>
+        <p>You are logged in as Administrator.</p>
+        <button onclick="location.reload()">Logout</button>
+    </section>
 
     <script src="script.js"></script>
 </body>
