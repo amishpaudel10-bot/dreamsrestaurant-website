@@ -3,76 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dreams Restaurant | Sapana Paudel</title>
+    <title>Dreams Restaurant | Gaindakot</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <header>
-        <div class="header-top">
-            <h1>Dreams Restaurant</h1>
-            <p>Owner: Sapana Paudel | 📍 Gaindakot-2, Riverside</p>
-        </div>
-        <nav>
-            <button onclick="toggleAdminLogin()" class="admin-link">Admin Portal</button>
-        </nav>
+<body style="background:#f4f4f4; font-family:sans-serif; margin:0; display: flex; flex-direction: column; min-height: 100vh;">
+
+    <header style="background:#d32f2f; color:white; padding:20px; text-align:center;">
+        <h1 style="margin:0;">Dreams Restaurant</h1>
+        <button onclick="toggleAdminBox()" style="background:white; color:red; border:none; padding:8px 15px; border-radius:5px; font-weight:bold; margin-top:10px; cursor:pointer;">Admin Portal</button>
         
-        <div id="adminLoginBlock" class="hidden-panel">
-            <h3>Admin Access</h3>
-            <input type="text" id="admUser" placeholder="Amish Paudel">
-            <input type="password" id="admPass" placeholder="Password">
-            <button onclick="adminLogin()">Login</button>
+        <div id="adminLogin" style="display:none; margin-top:15px; background:white; padding:15px; color:black; border-radius:8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); max-width:300px; margin-left:auto; margin-right:auto;">
+            <p style="margin:0 0 10px 0; font-weight:bold;">Admin Login</p>
+            <input type="text" id="admU" placeholder="Username" style="width:90%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px;">
+            <input type="password" id="admP" placeholder="Password" style="width:90%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px;">
+            <button onclick="checkAdmin()" style="width:95%; padding:12px; background:#d32f2f; color:white; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">Login</button>
         </div>
     </header>
 
-    <main id="userInterface">
-        <div class="notice-bar">
-            <span>🚀 Delivery under 30min</span> | <span>📞 +977 976-6627143</span>
+    <div id="mainSite" style="flex: 1;">
+        <div style="background:#333; color:white; text-align:center; padding:10px; font-size:14px;">🚀 Delivery under 30min (Naraynghat & Gaidakot)</div>
+        
+        <h2 style="text-align:center; color:#333; margin-top:20px;">Our Food Packages</h2>
+        <div id="menuGrid" style="display:flex; flex-wrap:wrap; justify-content:center; padding:10px;"></div>
+
+        <div id="orderForm" style="display:none; background:white; padding:20px; border-radius:15px; margin:15px; border:2px solid #d32f2f; max-width:500px; margin-left:auto; margin-right:auto;">
+            <h2 id="orderTitle" style="color:#d32f2f; margin-top:0;"></h2>
+            <input type="text" id="custName" placeholder="Enter Your Full Name" style="width:95%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:5px;">
+            <select id="custLoc" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:5px;">
+                <option value="Gaidakot">Gaidakot</option>
+                <option value="Naraynghat">Naraynghat</option>
+            </select>
+            <button onclick="submitToWA()" style="width:100%; padding:15px; background:#25D366; color:white; border:none; font-weight:bold; border-radius:10px; cursor:pointer; font-size:16px;">Order via WhatsApp</button>
         </div>
+    </div>
 
-        <h2 class="section-title">Select Your Package</h2>
-        <div id="packageGrid" class="grid-container"></div>
+    <div id="adminDash" style="display:none; padding:20px; background:white; min-height:100vh;">
+        <h2 style="color:#d32f2f;">Admin Dashboard (Sapana Paudel)</h2>
+        <p>Manage your orders here.</p>
+        <div id="ordersList"></div>
+        <button onclick="location.reload()" style="background:black; color:white; width:100%; padding:15px; margin-top:20px; border:none; cursor:pointer; border-radius:5px;">Logout</button>
+    </div>
 
-        <div id="orderModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h3>Order: <span id="selectedItemName"></span></h3>
-                <p class="area-warning">⚠️ Delivery only for Naraynghat & Gaidakot</p>
-                
-                <input type="text" id="custName" placeholder="Enter Full Name">
-                <select id="custLoc">
-                    <option value="Gaindakot">Gaindakot</option>
-                    <option value="Naraynghat">Naraynghat</option>
-                </select>
-                <input type="text" id="coupon" placeholder="Coupon Code (e.g. DREAM10)">
-                
-                <div class="payment-box">
-                    <h4>Payment (eSewa / Khalti / Bank)</h4>
-                    <p>Total: NPR <span id="displayPrice">0</span></p>
-                    <div class="qr-placeholder">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ESewa_9766627143" alt="Admin QR">
-                    </div>
-                    <label>Upload Payment Screenshot:</p>
-                    <input type="file" id="payShot" accept="image/*">
-                </div>
-
-                <button onclick="dispatchWhatsApp()" class="whatsapp-btn">Submit Order to WhatsApp</button>
-            </div>
-        </div>
-    </main>
-
-    <section id="adminDash" class="hidden-panel admin-view">
-        <h2>Admin Panel (Amish Paudel)</h2>
-        <div class="admin-controls">
-            <h3>Pending Orders</h3>
-            <div id="pendingOrders"></div>
-            <hr>
-            <h3>Completed/Declined Orders</h3>
-            <div id="orderHistory"></div>
-        </div>
-        <button onclick="location.reload()" class="logout-btn">Logout</button>
-    </section>
+    <footer style="background:#eee; color:#333; padding:25px; text-align:center; border-top:1px solid #ccc; margin-top:30px;">
+        <p style="margin:5px 0; font-size:18px; font-weight:bold;">Owner: Sapana Paudel</p>
+        <p style="margin:10px 0; font-size:16px;">📞 Customer Service: <a href="tel:+9779766627143" style="color:#d32f2f; text-decoration:none; font-weight:bold;">+977 976-6627143</a></p>
+        <p style="font-size:14px; color:#666;">📍 Gaindakot-2, Riverside</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
-                    </html>
-                    
+</html>
