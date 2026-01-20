@@ -1,92 +1,42 @@
-const packages = [
-    { id: 1, name: 'Family Combo', price: 1200, img: 'https://images.unsplash.com/photo-1574484284002-952d92456975?q=80&w=200&auto=format&fit=crop' },
-    { id: 2, name: 'Khana Set Pack', price: 300, img: 'https://images.unsplash.com/photo-1626777553732-480760f38101?q=80&w=200&auto=format&fit=crop' },
-    { id: 3, name: 'Momo Bucket', price: 500, img: 'https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?q=80&w=200&auto=format&fit=crop' }
-];
-
-let selectedPackage = null;
-let activeOrders = JSON.parse(localStorage.getItem('dreamsOrders')) || [];
-
-window.onload = () => {
-    const grid = document.getElementById('packageGrid');
-    grid.innerHTML = packages.map(p => `
-        <div class="card">
-            <img src="${p.img}" width="100%">
-            <h3>${p.name}</h3>
-            <p>NPR ${p.price}</p>
-            <button onclick="selectPackage(${p.id})">Select Package</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreams Restaurant | Sapana Paudel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background:#f8f9fa; font-family: sans-serif; margin:0;">
+    <header style="background:#d32f2f; color:white; padding:15px; text-align:center; position:sticky; top:0; z-index:100;">
+        <h1 style="margin:0;">Dreams Restaurant</h1>
+        <p style="margin:5px 0;">📍 Gaindakot-2, Riverside | Owner: Sapana Paudel</p>
+        <button onclick="toggleAdminLogin()" style="background:none; border:1px solid white; color:white; padding:5px 10px; border-radius:4px; cursor:pointer;">Admin Login</button>
+        
+        <div id="adminLogin" style="display:none; padding:15px; background:white; color:black; border:2px solid #d32f2f; margin:10px; border-radius:8px;">
+            <input type="text" id="admUser" placeholder="Amish Paudel" style="width:80%; padding:8px; margin-bottom:5px;">
+            <input type="password" id="admPass" placeholder="Password" style="width:80%; padding:8px; margin-bottom:5px;">
+            <button onclick="adminLogin()" style="width:85%; padding:10px; background:#d32f2f; color:white; border:none;">Login</button>
         </div>
-    `).join('');
-};
+    </header>
 
-function selectPackage(id) {
-    selectedPackage = packages.find(p => p.id === id);
-    document.getElementById('orderForm').style.display = 'block';
-    window.scrollTo(0, document.body.scrollHeight);
-}
-
-function submitOrder() {
-    const name = document.getElementById('custName').value;
-    const loc = document.getElementById('location').value;
-    const coup = document.getElementById('coupon').value;
-    let finalPrice = selectedPackage.price;
-
-    if(coup === "DREAMS10") finalPrice *= 0.9; // 10% discount
-
-    const newOrder = {
-        id: Date.now(),
-        customer: name,
-        item: selectedPackage.name,
-        price: finalPrice,
-        location: loc,
-        status: 'Pending'
-    };
-
-    activeOrders.push(newOrder);
-    localStorage.setItem('dreamsOrders', JSON.stringify(activeOrders));
-
-    // WhatsApp Dispatch
-    const msg = `New Order: ${selectedPackage.name}%0AName: ${name}%0ALocation: ${loc}%0ATotal: NPR ${finalPrice}`;
-    window.open(`https://wa.me/9779766627143?text=${msg}`);
-    
-    alert("Order Submitted! Please wait for Admin acceptance.");
-}
-
-function toggleAdmin() {
-    document.getElementById('adminLogin').style.display = 'block';
-}
-
-function login() {
-    const u = document.getElementById('user').value;
-    const p = document.getElementById('pass').value;
-    if(u === "Amish Paudel" && p === "amishff") {
-        document.getElementById('customerView').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
-        renderAdmin();
-    }
-}
-
-function renderAdmin() {
-    const pending = document.getElementById('pendingOrders');
-    const history = document.getElementById('orderHistory');
-    
-    pending.innerHTML = activeOrders.filter(o => o.status === 'Pending').map(o => `
-        <div style="border:1px solid red; padding:10px; margin:5px;">
-            <p>${o.customer} ordered ${o.item} (${o.location})</p>
-            <button onclick="updateStatus(${o.id}, 'Accepted')">Accept</button>
-            <button onclick="updateStatus(${o.id}, 'Declined')">Decline</button>
+    <div id="userSection">
+        <div style="background:#fff3cd; color:#856404; text-align:center; padding:10px; font-weight:bold;">
+            🚀 Delivery under 30min (Naraynghat & Gaidakot) | 📞 976-6627143
         </div>
-    `).join('');
+        
+        <div id="packageGrid" style="display:flex; flex-wrap:wrap; justify-content:center; padding:15px;"></div>
 
-    history.innerHTML = activeOrders.filter(o => o.status !== 'Pending').map(o => `
-        <p>${o.customer} - ${o.item} [${o.status}]</p>
-    `).join('');
-}
-
-function updateStatus(id, status) {
-    const order = activeOrders.find(o => o.id === id);
-    order.status = status;
-    localStorage.setItem('dreamsOrders', JSON.stringify(activeOrders));
-    renderAdmin();
-}
-
+        <div id="checkout" style="display:none; background:white; padding:20px; border-radius:15px; margin:15px; border:2px solid #ddd;">
+            <h3 id="selectedTitle" style="color:#d32f2f;">Order Details</h3>
+            <input type="text" id="cName" placeholder="Full Name" style="width:95%; padding:10px; margin-bottom:10px;">
+            <select id="cLoc" style="width:100%; padding:10px; margin-bottom:10px;">
+                <option value="Gaindakot">Gaindakot</option>
+                <option value="Naraynghat">Naraynghat</option>
+            </select>
+            <input type="text" id="coupon" placeholder="Coupon Code" style="width:95%; padding:10px; margin-bottom:10px;">
+            
+            <div style="margin:15px 0; border:1px dashed #d32f2f; padding:10px; text-align:center;">
+                <h4>Scan to Pay: NPR <span id="finalPriceDisplay">0</span></h4>
+                <img src="qr.jpg" alt="Payment QR" style="width:180px; margin-bottom:10px; border:1px solid #eee;">
+                <p>Upload Payment
+    
