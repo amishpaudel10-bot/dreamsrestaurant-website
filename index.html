@@ -1,44 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dreams Restaurant and Mini Lodge</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <h1 id="restaurantName">Dreams Restaurant and Mini Lodge</h1>
-        <nav>
-            <a href="#menu">Menu</a>
-            <a href="#order">Order</a>
-            <a href="#" onclick="toggleAdminLogin()">Admin Login</a>
-        </nav>
-        
-        <div id="adminLoginForm" style="display:none; padding: 20px; background: #eee; margin-top: 10px;">
-            <input type="text" id="headerAdminUser" placeholder="Username (Amish Paudel)">
-            <input type="password" id="headerAdminPass" placeholder="Password (amishff)">
-            <button onclick="loginAdminFromHeader()">Login</button>
-        </div>
-    </header>
+<section id="adminDashboard" style="display:none; padding: 20px; background: #fff; border: 5px solid #d32f2f; margin: 20px;">
+    <h2>Dreams Admin Control</h2>
+    
+    <div style="border-bottom: 1px solid #ccc; padding-bottom: 20px;">
+        <h3>Add New Food Item</h3>
+        <input type="text" id="newItemName" placeholder="Dish Name">
+        <input type="number" id="newItemPrice" placeholder="Price">
+        <button onclick="addNewItem()">Add to Menu</button>
+    </div>
 
-    <section id="dashboard" class="hero">
-        <h2>Welcome to Dreams!</h2>
-        <p>Authentic Nepali flavors. Customer Service: <span id="customerService">+977 982-5205381</span></p>
-    </section>
+    <div>
+        <h3>Current Menu (Edit)</h3>
+        <ul id="adminMenuList" style="text-align: left; list-style: none;"></ul>
+    </div>
 
-    <section id="menu">
-        <h2>Our Menu</h2>
-        <div id="menuGrid" class="menu-grid">
-            </div>
-    </section>
-
-    <section id="adminDashboard" style="display:none; padding: 20px; background: #fff; border: 2px solid red;">
-        <h2>Admin Control Panel</h2>
-        <p>You are logged in as Administrator.</p>
-        <button onclick="location.reload()">Logout</button>
-    </section>
-
-    <script src="script.js"></script>
-</body>
-</html>
+    <button onclick="location.reload()" style="margin-top:20px;">Logout & Save</button>
+</section>
