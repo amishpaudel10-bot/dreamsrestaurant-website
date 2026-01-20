@@ -3,226 +3,41 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-}
-
-header {
-    background-color: #d32f2f; /* Red */
-    color: white;
-    padding: 1rem;
     text-align: center;
 }
-
+header {
+    background-color: #d32f2f;
+    color: white;
+    padding: 1rem;
+}
 nav a {
     color: white;
     margin: 0 1rem;
     text-decoration: none;
+    font-weight: bold;
 }
-
-.hero {
-    background: linear-gradient(rgba(211, 47, 47, 0.8), rgba(211, 47, 47, 0.8)), url('https://via.placeholder.com/1200x600?text=Nepali+Foods') no-repeat center center/cover; /* Red overlay with food image placeholder */
-    height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-align: center;
-}
-
 .menu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    padding: 2rem;
-}
-
-.menu-item {
-    border: 1px solid #ddd;
-    padding: 1rem;
-    text-align: center;
-    background-color: white;
-}
-
-#order, #location, #contact {
-    padding: 2rem;
-    text-align: center;
-}
-
-#qrCodes {
-    margin-bottom: 1rem;
-}
-
-#qrCodes img {
-    width: 100px;
-    height: 100px;
-    margin: 0 0.5rem;
-}
-
-form {
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-input, select, button {
-    display: block;
-    width: 100%;
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-}
-
-button {
-    background-color: #d32f2f;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-}
-
-/* Modal for Admin */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-}
-
-.modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-}
-
-/* Admin Dashboard Styles */
-.admin-dashboard {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    min-height: 100vh;
-    padding: 2rem;
-}
-
-.admin-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.admin-header h1 {
-    color: #d32f2f;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.stat-card {
-    background: white;
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.stat-card h3 {
-    margin: 0;
-    color: #d32f2f;
-}
-
-.stat-card p {
-    font-size: 2rem;
-    margin: 0.5rem 0;
-    color: #333;
-}
-
-.admin-nav {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
 }
-
-.admin-nav button {
-    padding: 0.75rem 1.5rem;
-    background-color: #d32f2f;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.admin-nav button:hover {
-    background-color: #b71c1c;
-}
-
-.admin-section {
+.menu-item {
     background: white;
+    padding: 15px;
     border-radius: 8px;
-    padding: 2rem;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    max-width: 800px;
-    margin: 0 auto;
+    width: 200px;
 }
-
-.admin-section h4 {
-    color: #d32f2f;
-    margin-bottom: 1rem;
+input, button {
+    padding: 10px;
+    margin: 5px;
 }
-
-.admin-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.admin-section li {
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    background-color: #fafafa;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.admin-section button {
-    margin-left: 0.5rem;
-    padding: 0.25rem 0.5rem;
-    background-color: #d32f2f;
+button {
+    background: #d32f2f;
     color: white;
     border: none;
-    border-radius: 3px;
     cursor: pointer;
 }
 
-.admin-section button:hover {
-    background-color: #b71c1c;
-}
-
-.add-item-form {
-    margin-top: 1rem;
-}
-
-.add-item-form input {
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    width: calc(100% - 1rem);
-}
-
-.add-item-form button {
-    width: 100%;
-}
