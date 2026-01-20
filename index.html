@@ -3,60 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dreams Restaurant - Gaidakot</title>
+    <title>Dreams Restaurant | Sapana Paudel</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Dreams Restaurant</h1>
-        <p>📍 Gaindakot-2, Riverside | Owner: Sapana Paudel</p>
-        <button onclick="toggleAdmin()">Admin Login</button>
+        <div class="header-top">
+            <h1>Dreams Restaurant</h1>
+            <p>Owner: Sapana Paudel | 📍 Gaindakot-2, Riverside</p>
+        </div>
+        <nav>
+            <button onclick="toggleAdminLogin()" class="admin-link">Admin Portal</button>
+        </nav>
         
-        <div id="adminLogin" style="display:none; background:white; padding:10px; margin-top:10px; color:black;">
-            <input type="text" id="user" placeholder="Amish Paudel">
-            <input type="password" id="pass" placeholder="amishff">
-            <button onclick="login()">Login</button>
+        <div id="adminLoginBlock" class="hidden-panel">
+            <h3>Admin Access</h3>
+            <input type="text" id="admUser" placeholder="Amish Paudel">
+            <input type="password" id="admPass" placeholder="Password">
+            <button onclick="adminLogin()">Login</button>
         </div>
     </header>
 
-    <div id="customerView">
-        <section class="info-bar">
+    <main id="userInterface">
+        <div class="notice-bar">
             <span>🚀 Delivery under 30min</span> | <span>📞 +977 976-6627143</span>
-        </section>
-
-        <div id="packageGrid" class="grid"></div>
-
-        <div id="orderForm" style="display:none; background:white; padding:20px; margin:10px; border-radius:10px;">
-            <h3>Complete Your Order</h3>
-            <p>Delivery only in: <b>Naraynghat & Gaidakot</b></p>
-            <input type="text" id="custName" placeholder="Your Name">
-            <select id="location">
-                <option value="Gaidakot">Gaidakot</option>
-                <option value="Naraynghat">Naraynghat</option>
-            </select>
-            <input type="text" id="coupon" placeholder="Coupon Code (Optional)">
-            
-            <div class="payment-section">
-                <h4>Payment (eSewa/Khalti/Bank)</h4>
-                <p>Scan Admin QR for Payment:</p>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=PAYMENT_TO_9766627143" alt="Admin QR">
-                <p>Upload Screenshot of Payment:</p>
-                <input type="file" id="payShot" accept="image/*">
-            </div>
-            
-            <button onclick="submitOrder()" class="order-btn">Submit via WhatsApp</button>
         </div>
-    </div>
 
-    <div id="adminPanel" style="display:none; padding:20px;">
-        <h2>Admin Dashboard (Amish Paudel)</h2>
-        <div id="pendingOrders"></div>
-        <hr>
-        <h3>Order History</h3>
-        <div id="orderHistory"></div>
-        <button onclick="location.reload()">Logout</button>
-    </div>
+        <h2 class="section-title">Select Your Package</h2>
+        <div id="packageGrid" class="grid-container"></div>
+
+        <div id="orderModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h3>Order: <span id="selectedItemName"></span></h3>
+                <p class="area-warning">⚠️ Delivery only for Naraynghat & Gaidakot</p>
+                
+                <input type="text" id="custName" placeholder="Enter Full Name">
+                <select id="custLoc">
+                    <option value="Gaindakot">Gaindakot</option>
+                    <option value="Naraynghat">Naraynghat</option>
+                </select>
+                <input type="text" id="coupon" placeholder="Coupon Code (e.g. DREAM10)">
+                
+                <div class="payment-box">
+                    <h4>Payment (eSewa / Khalti / Bank)</h4>
+                    <p>Total: NPR <span id="displayPrice">0</span></p>
+                    <div class="qr-placeholder">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ESewa_9766627143" alt="Admin QR">
+                    </div>
+                    <label>Upload Payment Screenshot:</p>
+                    <input type="file" id="payShot" accept="image/*">
+                </div>
+
+                <button onclick="dispatchWhatsApp()" class="whatsapp-btn">Submit Order to WhatsApp</button>
+            </div>
+        </div>
+    </main>
+
+    <section id="adminDash" class="hidden-panel admin-view">
+        <h2>Admin Panel (Amish Paudel)</h2>
+        <div class="admin-controls">
+            <h3>Pending Orders</h3>
+            <div id="pendingOrders"></div>
+            <hr>
+            <h3>Completed/Declined Orders</h3>
+            <div id="orderHistory"></div>
+        </div>
+        <button onclick="location.reload()" class="logout-btn">Logout</button>
+    </section>
 
     <script src="script.js"></script>
 </body>
-</html>
+                    </html>
+                    
