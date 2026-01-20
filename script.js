@@ -1,107 +1,72 @@
-// Food Packages with Image Placeholders
-const packages = [
-    { id: 1, name: 'Family Special Pack', price: 1500, img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=300' },
-    { id: 2, name: 'Chicken Khana Set', price: 300, img: 'https://images.unsplash.com/photo-1626777553732-480760f38101?w=300' },
-    { id: 3, name: 'Momo Delight Bucket', price: 500, img: 'https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=300' }
+const items = [
+    { id: 1, name: 'Chicken Khana Set', price: 300 },
+    { id: 2, name: 'Mutton Khana Set', price: 450 },
+    { id: 3, name: 'Buff Momo (Steam)', price: 150 },
+    { id: 4, name: 'Chicken Momo (Steam)', price: 200 },
+    { id: 5, name: 'C-Momo Special', price: 250 },
+    { id: 6, name: 'Chicken Chawmin', price: 180 },
+    { id: 7, name: 'Veg Chawmin', price: 120 },
+    { id: 8, name: 'Family Combo Pack', price: 1500 },
+    { id: 9, name: 'Local Dhido Set', price: 350 },
+    { id: 10, name: 'Chicken Sekuwa Pack', price: 400 },
+    { id: 11, name: 'Buff Chilli Pack', price: 220 },
+    { id: 12, name: 'Sadeko Wai Wai Extra', price: 80 },
+    { id: 13, name: 'Chicken Fried Rice', price: 200 },
+    { id: 14, name: 'Veg Fried Rice', price: 150 },
+    { id: 15, name: 'Egg Curry Rice Set', price: 250 },
+    { id: 16, name: 'Full Roast Chicken', price: 850 },
+    { id: 17, name: 'Sausage Fry (Small)', price: 100 },
+    { id: 18, name: 'Mix Veg Curry Set', price: 220 },
+    { id: 19, name: 'Cold Drink (Large)', price: 250 },
+    { id: 20, name: 'Dreams Platter', price: 1250 }
 ];
 
-let selectedPkg = null;
-let orderDB = JSON.parse(localStorage.getItem('dreams_orders_v1')) || [];
+let selectedItem = null;
 
 window.onload = () => {
-    const grid = document.getElementById('packageGrid');
-    grid.innerHTML = packages.map(pkg => `
-        <div class="card">
-            <img src="${pkg.img}" alt="${pkg.name}">
-            <h3>${pkg.name}</h3>
-            <p>NPR ${pkg.price}</p>
-            <button onclick="openOrder(${pkg.id})">Order Now</button>
-        </div>
-    `).join('');
+    const grid = document.getElementById('menuGrid');
+    if (grid) {
+        grid.innerHTML = items.map(i => `
+            <div style="background:white; margin:8px; padding:12px; width:140px; text-align:center; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); border:1px solid #eee;">
+                <h3 style="font-size:14px; margin:5px 0; height:35px; overflow:hidden;">${i.name}</h3>
+                <p style="font-weight:bold; color:#d32f2f; margin:5px 0;">NPR ${i.price}</p>
+                <button onclick="startOrder(${i.id})" style="background:#d32f2f; color:white; border:none; padding:7px 12px; border-radius:5px; cursor:pointer; font-size:12px;">Order Now</button>
+            </div>
+        `).join('');
+    }
 };
 
-function openOrder(id) {
-    selectedPkg = packages.find(p => p.id === id);
-    document.getElementById('selectedItemName').innerText = selectedPkg.name;
-    document.getElementById('displayPrice').innerText = selectedPkg.price;
-    document.getElementById('orderModal').style.display = 'block';
+function toggleAdminBox() {
+    const box = document.getElementById('adminLogin');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
 }
 
-function closeModal() {
-    document.getElementById('orderModal').style.display = 'none';
+function startOrder(id) {
+    selectedItem = items.find(i => i.id === id);
+    document.getElementById('orderTitle').innerText = "Ordering: " + selectedItem.name;
+    document.getElementById('orderForm').style.display = 'block';
+    window.scrollTo({ top: document.getElementById('orderForm').offsetTop - 50, behavior: 'smooth' });
 }
 
-function dispatchWhatsApp() {
+function submitToWA() {
     const name = document.getElementById('custName').value;
     const loc = document.getElementById('custLoc').value;
-    const coup = document.getElementById('coupon').value;
-    let finalPrice = selectedPkg.price;
-
-    // Coupon logic
-    if (coup === "DREAM10") {
-        finalPrice = finalPrice * 0.9;
-        alert("Coupon Applied! 10% Discount given.");
-    }
-
-    const newOrder = {
-        id: Date.now(),
-        customer: name,
-        item: selectedPkg.name,
-        price: finalPrice,
-        location: loc,
-        status: 'Pending'
-    };
-
-    orderDB.push(newOrder);
-    localStorage.setItem('dreams_orders_v1', JSON.stringify(orderDB));
-
-    // WhatsApp Dispatch
-    const whatsappMsg = `*NEW ORDER - DREAMS RESTAURANT*%0A------------------%0AItem: ${selectedPkg.name}%0ACustomer: ${name}%0ALocation: ${loc}%0ATotal Price: NPR ${finalPrice}%0AStatus: Payment Uploaded`;
-    window.open(`https://wa.me/9779766627143?text=${whatsappMsg}`);
+    if(!name) { alert("Please enter your name"); return; }
     
-    closeModal();
-    alert("Order recorded in Admin Panel. Delivery under 30min!");
+    const msg = `*NEW ORDER - DREAMS RESTAURANT*%0A--------------------------%0AItem: ${selectedItem.name}%0APrice: NPR ${selectedItem.price}%0ACustomer: ${name}%0ALocation: ${loc}`;
+    window.open(`https://wa.me/9779766627143?text=${msg}`);
 }
 
-// Admin Functions
-function toggleAdminLogin() {
-    const loginDiv = document.getElementById('adminLoginBlock');
-    loginDiv.style.display = loginDiv.style.display === 'block' ? 'none' : 'block';
-}
-
-function adminLogin() {
-    const u = document.getElementById('admUser').value;
-    const p = document.getElementById('admPass').value;
-    if (u === "Amish Paudel" && p === "amishff") {
-        document.getElementById('userInterface').style.display = 'none';
+function checkAdmin() {
+    const u = document.getElementById('admU').value;
+    const p = document.getElementById('admP').value;
+    // Updated Credentials
+    if(u === "Sapana Paudel" && p === "pukuli") {
+        document.getElementById('mainSite').style.display = 'none';
         document.getElementById('adminDash').style.display = 'block';
-        document.getElementById('adminLoginBlock').style.display = 'none';
-        renderAdmin();
-    } else {
-        alert("Invalid Access");
+        document.getElementById('adminLogin').style.display = 'none';
+    } else { 
+        alert("Incorrect Username or Password"); 
     }
 }
-
-function renderAdmin() {
-    const pending = document.getElementById('pendingOrders');
-    const history = document.getElementById('orderHistory');
     
-    pending.innerHTML = orderDB.filter(o => o.status === 'Pending').map(o => `
-        <div class="admin-card">
-            <p><strong>${o.customer}</strong> ordered ${o.item} (${o.location})</p>
-            <button onclick="updateStatus(${o.id}, 'Accepted')">Accept ✅</button>
-            <button onclick="updateStatus(${o.id}, 'Declined')">Decline ❌</button>
-        </div>
-    `).join('');
-
-    history.innerHTML = orderDB.filter(o => o.status !== 'Pending').map(o => `
-        <p>${o.customer} - ${o.item} - <b>${o.status}</b></p>
-    `).join('');
-}
-
-function updateStatus(id, newStatus) {
-    const order = orderDB.find(o => o.id === id);
-    order.status = newStatus;
-    localStorage.setItem('dreams_orders_v1', JSON.stringify(orderDB));
-    renderAdmin();
-}
